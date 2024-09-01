@@ -1,11 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AppContext from '../../context/AppContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 const ShowProduct = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const { products, filteredData, addToCart, isAuth } = useContext(AppContext)
+  useEffect(() => {
+    if (filteredData && filteredData.length > 0) {
+      setLoading(false);
+    }
+  }, [filteredData]);
+  if (loading) {
+    return (
+      <div className="container mt-3 d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+          <span className='p-2'>Loading</span>
+      </div>
+    );
+  }
   return (
     <>
       <div className="container mt-3">
